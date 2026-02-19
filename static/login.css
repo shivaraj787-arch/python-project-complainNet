@@ -1,0 +1,77 @@
+/* ================= RESET ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ================= BODY ================= */
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #2c3e50, #4ca1af);
+}
+
+/* ================= LOGIN CONTAINER ================= */
+form {
+    background: white;
+    padding: 40px 35px;
+    border-radius: 12px;
+    width: 350px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* ================= HEADING ================= */
+h1 {
+    position: absolute;
+    top: 80px;
+    color: white;
+    font-size: 28px;
+    letter-spacing: 1px;
+}
+
+/* ================= INPUT FIELDS ================= */
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 18px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+input:focus {
+    border-color: #4ca1af;
+    outline: none;
+    box-shadow: 0 0 6px rgba(76, 161, 175, 0.4);
+}
+
+/* ================= BUTTON ================= */
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #4ca1af;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background: #357f8a;
+    transform: translateY(-2px);
+}
+
+/* ================= ERROR MESSAGE ================= */
+p {
+    margin-bottom: 15px;
+    font-size: 14px;
+}

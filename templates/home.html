@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>ComplainNet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+  <div class="page" id="statsData" data-total="{{ s.total if s else 0 }}" data-open="{{ s.open if s else 0 }}"
+    data-resolved="{{ s.resolved if s else 0 }}">
+
+    <!-- 🔥 TOP BAR WITH LOGO -->
+    <header class="top-bar" style="display:flex;justify-content:space-between;align-items:center;">
+
+      <!-- LEFT SIDE (LOGO + BRAND) -->
+      <div style="display:flex;align-items:center;gap:15px;">
+        <img src="{{ url_for('static', filename='images/logo.png') }}"
+          style="height:55px;background:white;padding:6px;border-radius:10px;">
+
+        <div class="logo">Complain<span>Net</span></div>
+      </div>
+
+      <!-- RIGHT SIDE (NAV LINKS) -->
+      <nav>
+        <a href="{{ url_for('home') }}" class="active">Home</a>
+        <a href="{{ url_for('add') }}">Register Complaint</a>
+        <a href="{{ url_for('login') }}">Admin Login</a>
+      </nav>
+
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <h1>Your Voice Matters</h1>
+      <p>We’re here to resolve your concerns quickly and efficiently.</p>
+      <div class="hero-buttons">
+        <a class="btn primary" href="{{ url_for('add') }}">Submit a Complaint</a>
+        <a class="btn ghost" href="{{ url_for('login') }}">Admin Dashboard</a>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats-row">
+      <div class="card">
+        <h2>Total Complaints</h2>
+        <p class="stat-number">{{ s.total if s else 0 }}</p>
+      </div>
+
+      <div class="card">
+        <h2>Open Cases</h2>
+        <p class="stat-number open">{{ s.open if s else 0 }}</p>
+      </div>
+
+      <div class="card">
+        <h2>Resolved</h2>
+        <p class="stat-number resolved">{{ s.resolved if s else 0 }}</p>
+      </div>
+    </section>
+
+    <!-- ANALYTICS -->
+    <section class="table-card">
+      <h2>Complaint Analytics</h2>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:25px;">
+
+        <div>
+          <h3>Status Distribution</h3>
+          <canvas id="statusChart"></canvas>
+        </div>
+
+        <div>
+          <h3>Complaint Overview</h3>
+          <canvas id="barChart"></canvas>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- CHART SCRIPT -->
+  <script>
+    const container = document.getElementById("statsData");
+
+    const total = Number(container.dataset.total || 0);
+    const openC = Number(container.dataset.open || 0);
+    const resolved = Number(container.dataset.resolved || 0);
+
+    if (document.getElementById("statusChart")) {
+      new Chart(document.getElementById("statusChart"), {
+        type: "pie",
+        data: {
+          labels: ["Open", "Resolved"],
+          datasets: [{
+            data: [openC, resolved],
+            backgroundColor: ["#ff6b6b", "#2ecc71"]
+          }]
+        },
+        options: { responsive: true }
+      });
+    }
+
+    if (document.getElementById("barChart")) {
+      new Chart(document.getElementById("barChart"), {
+        type: "bar",
+        data: {
+          labels: ["Total", "Open", "Resolved"],
+          datasets: [{
+            label: "Complaints",
+            data: [total, openC, resolved],
+            backgroundColor: ["#6c5ce7", "#ff7675", "#00b894"]
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+    }
+  </script>
+
+</body>
+
+</html>

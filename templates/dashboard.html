@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Dashboard - ComplainNet</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="page">
+
+    <!-- ================= HEADER ================= -->
+    <header class="top-bar">
+      <div class="logo">Complain<span>Net</span></div>
+
+      <nav>
+        <a href="{{ url_for('home') }}">Public Home</a>
+
+        <!-- Logout Form -->
+        <form method="POST" action="{{ url_for('logout') }}" class="inline-form">
+
+          <button class="btn ghost" type="submit">
+            Logout
+          </button>
+        </form>
+      </nav>
+    </header>
+
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <h1>Complaint Dashboard</h1>
+      <p>Manage and resolve complaints quickly.</p>
+    </section>
+
+    <!-- ================= STATS ================= -->
+    <section class="stats-row">
+      <div class="card">
+        <h2>Total</h2>
+        <p class="stat-number">{{ s.total }}</p>
+      </div>
+
+      <div class="card">
+        <h2>Open</h2>
+        <p class="stat-number open">{{ s.open }}</p>
+      </div>
+
+      <div class="card">
+        <h2>Resolved</h2>
+        <p class="stat-number resolved">{{ s.resolved }}</p>
+      </div>
+    </section>
+
+    <!-- ================= TABLE ================= -->
+    <section class="table-card">
+      <h2>All Complaints</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Complaint ID</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Complaint</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for r in rows %}
+          <tr class="{{ 'resolved-row' if r['status'] == 'RESOLVED' else '' }}">
+            <td>{{ r['id'] }}</td>
+            <td>{{ r['complaint_id'] }}</td>
+            <td>{{ r['name'] }}</td>
+            <td>{{ r['phone'] }}</td>
+            <td>{{ r['complaint'] }}</td>
+            <td>{{ r['status'] }}</td>
+            <td>{{ r['date'] }}</td>
+
+            <td>
+              {% if r['status'] == 'OPEN' %}
+              <form method="POST" action="{{ url_for('resolve', cid=r['complaint_id']) }}" class="inline-form">
+
+                <button class="btn small" type="submit">
+                  Mark Resolved
+                </button>
+              </form>
+              {% else %}
+              <span class="badge">Done</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="8" style="text-align:center;">
+              No complaints available.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </section>
+
+  </div>
+
+</body>
+
+</html>

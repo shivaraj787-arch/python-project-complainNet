@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Register Complaint</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='add.css') }}">
+</head>
+
+<body>
+
+  <h1>Register Complaint</h1>
+
+  {% if error %}
+  <p style="color:red;">{{ error }}</p>
+  {% endif %}
+
+  {% if msg %}
+  <p style="color:green;">{{ msg }}</p>
+  {% endif %}
+
+  <form method="POST">
+    <input name="name" placeholder="Your Name"><br><br>
+    <input name="phone" placeholder="Phone"><br><br>
+    <textarea name="complaint" placeholder="Complaint"></textarea><br><br>
+    <button type="submit">Submit</button>
+  </form>
+
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+<body>
+
+    <div class="navbar">
+        <h2 class="brand">Complain<span>Net</span></h2>
+
+        <div class="nav-right">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
+            <a href="/">Home</a>
+            <a href="/register">Register Complaint</a>
+            <a href="/admin">Admin Login</a>
+        </div>
+    </div>
+
+    {% block content %}{% endblock %}
+
+</body>
